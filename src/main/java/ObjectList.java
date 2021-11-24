@@ -5,7 +5,7 @@ public class ObjectList {
     public Object[] objArr;
 
     public ObjectList() {
-        this.objArr = (Object[]) objArr[0];
+        this.objArr = new Object[0]; // tutaj mialem blad
     }
 
     public void add(Object o) {
@@ -16,8 +16,54 @@ public class ObjectList {
     }
 
     public Object get(int index) {
-        return this.objArr[index];
+         try {
+             return this.objArr[index];
+         } catch (ArrayIndexOutOfBoundsException e) {
+             System.out.println("There is no such index of item in list.");
+             return null;
+         }
     }
+
+    public int size() {
+        return this.objArr.length;
+    }
+
+    public void remove(Object o) {
+        Object[] result = new Object[this.objArr.length-1];
+        int index = 0;
+        for (int i = 0; i < this.objArr.length; i++) {
+            if (o.equals(this.objArr[i])) {
+                index = i;
+
+            }
+        }
+        for (int i = 0, c = 0; i < this.objArr.length; i++) {
+            if (i != index) {
+                result[c] = this.objArr[i];
+                c++;
+            }
+        }
+
+        this.objArr = result;
+    }
+
+    public void removeAll() {
+        this.objArr = new Object[0];
+    }
+
+
+    public void addAsFirst(Object o) {
+        Object[] temp = new Object[this.objArr.length+1];
+        temp[0] = o;
+
+        for (int i = 1, c = 0; i < objArr.length; i++) {
+            temp[i] = this.objArr[c];
+            c++;
+        }
+        this.objArr = temp;
+    }
+
+
 
 
 
