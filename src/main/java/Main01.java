@@ -17,13 +17,12 @@ public class Main01 {
         System.out.println(objects.getSize());
         ObjectLinkedList.Node witam = objects.getHead();
         System.out.println(witam.getData());
-        objects.add("witam");
+        objects.add("witam2");
         System.out.println(objects.getSize());
-        witam = objects.getHead();
-        ObjectLinkedList.Node data = witam.getNext();
-        System.out.println(data.getData());
-        objects.add("marek2");
+
+        objects.remove("marek");
         System.out.println(objects.getSize());
+        System.out.println(objects.getHead().getData());
     }
 
 }

@@ -6,10 +6,12 @@ public class ObjectLinkedList {
     public class Node {
         Object data;
         Node next;
+        Node prev;
 
         public Node(Object data) {
             this.data = data;
             this.next = null;
+            this.prev = null;
         }
 
         public Object getData() {
@@ -27,6 +29,14 @@ public class ObjectLinkedList {
         public void setNext(Node next) {
             this.next = next;
         }
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        public void setPrev(Node prev) {
+            this.prev = prev;
+        }
     }
 
     public ObjectLinkedList() {
@@ -37,40 +47,50 @@ public class ObjectLinkedList {
 
     public void add(Object item) {
         Node nextNode = new Node(item);
+
         if (head == null) {
             this.head = nextNode;
             this.size += 1;
         } else {
-            while (head.next != null) {
-                head = head.next;
+            while (this.head.next != null) {
+                this.head = head.next;
             }
-            head.next = nextNode;
+            Node temp = this.getHead(); // moj head z pustym next
+            nextNode.prev = temp;
+            temp.setNext(nextNode); // ustawiam next w moim headzie na dany node
             size += 1;
         }
     }
 
     public void remove(Object item) {
+        Node nextNode = new Node(item);
+        Node temp = this.head;
         int len = this.getSize();
-        for (int i = 1; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             if (head.getData() == item) {
-                this.head = nextNode;
-                this.size -= 1;
+
+                if (temp.getNext() != null && temp.getPrev() != null) {
+                    temp.prev.setNext(temp.getNext());
+                    temp.next.setPrev(temp.getPrev());
+                    this.size -= 1;
+                } else if (temp.getNext() == null) {
+                    temp.prev.setNext(null);
+                    this.setHead(temp.getNext());
+                    this.size -= 1;
+                } else {
+                    temp.next.setPrev(null);
+                    this.setHead(temp.getNext());
+                    this.size -= 1;
+                }
             } else {
                 head = head.next;
             }
 
         }
-        if (head.getData() == item) {
-            this.head = nextNode;
-            this.size -= 1;
-        } else {
-            while (head.next != null) {
-                head = head.next;
-            }
-            head.next = nextNode;
-            size += 1;
+
+
         }
-    }
+
 
     public Node getHead() {
         return head;
