@@ -19,7 +19,7 @@ public class Main01 {
         System.out.println(witam.getData());
         objects.add("witam2");
         System.out.println(objects.getSize());
-
+        System.out.println(objects.getHead().getData());
         objects.remove("marek");
         System.out.println(objects.getSize());
         System.out.println(objects.getHead().getData());

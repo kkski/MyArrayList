@@ -62,25 +62,29 @@ public class ObjectLinkedList {
         }
     }
 
-    public void remove(Object item) {
-        Node nextNode = new Node(item);
+    public Object remove(Object item) {
         Node temp = this.head;
         int len = this.getSize();
         for (int i = 0; i < len; i++) {
             if (head.getData() == item) {
 
-                if (temp.getNext() != null && temp.getPrev() != null) {
-                    temp.prev.setNext(temp.getNext());
-                    temp.next.setPrev(temp.getPrev());
-                    this.size -= 1;
-                } else if (temp.getNext() == null) {
+                if (temp.getNext() == null) {
                     temp.prev.setNext(null);
-                    this.setHead(temp.getNext());
                     this.size -= 1;
-                } else {
+                    return item;
+                } else if (temp.getPrev() == null){
                     temp.next.setPrev(null);
                     this.setHead(temp.getNext());
                     this.size -= 1;
+                    return item;
+                } else {
+                    Node prNode = temp.prev;
+                    Node neNode = temp.next;
+                    neNode.setPrev(prNode);
+                    prNode.setNext(neNode);
+                    temp.next.setPrev(temp.getPrev());
+                    this.size -= 1;
+                    return item;
                 }
             } else {
                 head = head.next;
@@ -88,8 +92,8 @@ public class ObjectLinkedList {
 
         }
 
-
-        }
+    return item;
+    }
 
 
     public Node getHead() {
